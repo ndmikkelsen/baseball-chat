@@ -1,29 +1,5 @@
-import { z } from 'zod'
-
-export const RawPlayerSchema = z.record(z.string(), z.any())
-
-export type Player = {
-  id: string
-  name: string
-  position: string
-  games: number
-  atBats: number
-  runs: number
-  hits: number
-  doubles: number
-  triples: number
-  homeRuns: number
-  rbi: number
-  walks: number
-  strikeouts: number
-  stolenBases: number
-  caughtStealing: number
-  avg: number
-  obp: number
-  slg: number
-  ops: number
-  description?: string | null
-}
+import type { Player } from '../../types/player'
+import { RawPlayerSchema } from '../../types/schemas'
 
 const num = (v: unknown) => (typeof v === 'number' ? v : Number(v ?? 0))
 

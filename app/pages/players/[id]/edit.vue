@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import type { Player } from "~~/types/player";
+
 const route = useRoute()
 const router = useRouter()
 const id = route.params.id as string
 
-const { data: player, pending } = await useFetch(`/api/players/${id}`)
+const { data: player, pending } = await useFetch<Player>(`/api/players/${id}`)
 
-const form = ref({
+const form = ref<Omit<Player, 'id' | 'description'>>({
   name: '',
   position: '',
   games: 0,
@@ -28,7 +30,8 @@ const form = ref({
 
 watch(player, (newPlayer) => {
   if (newPlayer) {
-    form.value = { ...newPlayer }
+    const { id, description, ...editableFields } = newPlayer
+    form.value = editableFields
   }
 }, { immediate: true })
 

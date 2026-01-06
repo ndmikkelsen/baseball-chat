@@ -27,5 +27,9 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  runtimeConfig: {
+    openaiApiKey: process.env.NUXT_OPENAI_API_KEY
   }
 })

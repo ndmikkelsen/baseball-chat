@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id              String   @id
+  name            String
+  position        String
+  games           Int
+  atBats          Int
+  runs            Int
+  hits            Int
+  doubles         Int
+  triples         Int
+  homeRuns        Int
+  rbi             Int
+  walks           Int
+  strikeouts      Int
+  stolenBases     Int
+  caughtStealing  Int
+  avg             Float
+  obp             Float
+  slg             Float
+  ops             Float
+  description     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([hits])
+  @@index([homeRuns])
+}

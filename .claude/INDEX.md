@@ -16,9 +16,9 @@
 
 ## 📊 Garden Statistics
 
-- **Total Files**: 15+ markdown files
-- **Active**: 15+ files
-- **Categories**: 3 (commands, templates, troubleshooting)
+- **Total Files**: 19+ markdown files
+- **Active**: 19+ files
+- **Categories**: 6 (commands, templates, architecture, patterns, quick-references, troubleshooting)
 - **Last Cultivation**: 2026-01-05
 
 ## 📁 Knowledge Base Structure
@@ -61,45 +61,64 @@ Reusable templates for documentation and communication.
 - **[Issue Template](templates/issue-template.md)**
   - Template for GitHub issues
 
+### Architecture (`architecture/`)
+
+System design and technology decisions.
+
+- **[Frontend-Only Nuxt Structure](architecture/frontend-only-nuxt.md)**
+  - How we simplified from monorepo to single Nuxt app
+  - Directory structure and data flow
+  - When to use this architecture vs monorepo
+
+### Patterns (`patterns/`)
+
+Reusable solutions to common problems.
+
+- **[Type Sharing in Nuxt](patterns/type-sharing-nuxt.md)**
+  - How to share TypeScript types between server and client
+  - Single source of truth for types
+  - Common patterns and anti-patterns
+
+### Quick References (`quick-references/`)
+
+Fast lookups and how-to guides.
+
+- **[Nuxt Dynamic Routes](quick-references/nuxt-dynamic-routes.md)**
+  - How `[id]` syntax works in file-based routing
+  - Navigation patterns and examples
+  - Type-safe route parameters
+
 ### Troubleshooting (`troubleshooting/`)
 
 Common issues and solutions.
 
-**Planned** (will be documented as we encounter issues):
-
-- Dev Server Issues
-- Build Errors
-- TypeScript Errors
-- Deployment Issues
+- **[UI Library Errors](troubleshooting/ui-library-errors.md)**
+  - When to replace complex UI libraries with simple HTML
+  - TanStack Table error resolution
+  - Decision framework for library vs custom code
 
 ## 🌱 Future Growth Areas
 
-As we build the application, we'll add:
+As we continue building, we may add:
 
-### Architecture (`architecture/`)
-
-- System design and technology decisions
+### Architecture
 - Data flow diagrams
 - API design patterns
-- Database schema design
+- Database schema design rationale
 
-### Patterns (`patterns/`)
-
-- Reusable solutions to common problems
+### Patterns
 - Vue component patterns
 - Composable patterns
 - Error handling patterns
-- Type-safe API communication
+- LLM caching strategies
 
 ### Standards (`standards/`)
-
 - Coding standards (Nuxt/Vue/TypeScript)
 - Testing standards
 - Git workflow
 - Environment & secrets management
 
-### Quick References (`quick-references/`)
-
+### Quick References
 - API endpoints reference
 - Environment variables guide
 - Deployment guide

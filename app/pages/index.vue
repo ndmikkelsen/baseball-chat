@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import type { Player } from "~/server/utils/player";
-
-type SortKey = "hits" | "homeRuns";
-type SortDirection = "asc" | "desc";
+import type { Player, SortKey, SortDirection } from "~~/types/player";
 
 const sortKey = ref<SortKey>("hits");
 const sortDirection = ref<SortDirection>("desc");

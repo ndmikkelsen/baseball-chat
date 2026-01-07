@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { Player } from "~~/types/player";
+
 const route = useRoute()
 const id = route.params.id as string
 
-const { data: player, pending, error, refresh } = await useFetch(`/api/players/${id}`)
+const { data: player, pending, error, refresh } = await useFetch<Player>(`/api/players/${id}`)
 
 const generatingDescription = ref(false)
 const descriptionError = ref<string | null>(null)

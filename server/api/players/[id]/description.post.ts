@@ -1,7 +1,8 @@
 import OpenAI from 'openai'
 import { getPlayerById, updatePlayer } from '../../../services/players'
+import type { DescriptionResponse } from '../../../../types/api'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<DescriptionResponse> => {
   const config = useRuntimeConfig(event)
   const apiKey = config.openaiApiKey
 

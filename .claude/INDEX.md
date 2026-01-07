@@ -2,7 +2,7 @@
 
 > Your comprehensive guide to building Baseball Chat together ⚾
 
-**Last Updated**: 2026-01-06
+**Last Updated**: 2026-01-07
 
 ## 🎯 Start Here
 
@@ -19,7 +19,7 @@
 - **Total Files**: 21+ markdown files
 - **Active**: 21+ files
 - **Categories**: 6 (commands, templates, architecture, patterns, quick-references, troubleshooting)
-- **Last Cultivation**: 2026-01-06
+- **Last Cultivation**: 2026-01-07
 
 ## 📁 Knowledge Base Structure
 
@@ -102,6 +102,10 @@ Fast lookups and how-to guides.
 
 Common issues and solutions.
 
+- **[Prisma Client Not Found](troubleshooting/prisma-client-not-found.md)**
+  - Misleading "Named export 'PrismaClient' not found" error
+  - Real cause: Client not generated, not import syntax
+  - Prevention strategies and singleton pattern
 - **[UI Library Errors](troubleshooting/ui-library-errors.md)**
   - When to replace complex UI libraries with simple HTML
   - TanStack Table error resolution

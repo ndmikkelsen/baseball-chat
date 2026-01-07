@@ -16,8 +16,8 @@
 
 ## 📊 Garden Statistics
 
-- **Total Files**: 21+ markdown files
-- **Active**: 21+ files
+- **Total Files**: 22+ markdown files
+- **Active**: 22+ files
 - **Categories**: 6 (commands, templates, architecture, patterns, quick-references, troubleshooting)
 - **Last Cultivation**: 2026-01-07
 
@@ -83,6 +83,12 @@ Reusable solutions to common problems.
   - How to share TypeScript types between server and client
   - Single source of truth for types
   - Common patterns and anti-patterns
+- **[Sortable Table Columns](patterns/sortable-table-columns.md)**
+  - Implementing sortable data tables with clickable headers
+  - Type-safe sorting for mixed data types (strings and numbers)
+  - Visual indicators with arrow icons
+  - Smart defaults based on column type
+  - Dual UI: clickable headers + dropdown menu
 
 ### Quick References (`quick-references/`)
 

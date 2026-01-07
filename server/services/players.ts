@@ -1,4 +1,6 @@
-import { mapRawToPlayer, RawPlayerSchema, type Player } from '../utils/player'
+import { mapRawToPlayer } from '../utils/player'
+import { RawPlayerSchema } from '../../types/schemas'
+import type { Player } from '../../types/player'
 import prisma from '../utils/prisma'
 
 let cachedUpstreamPlayers: Player[] | null = null

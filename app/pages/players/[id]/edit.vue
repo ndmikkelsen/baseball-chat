@@ -1,13 +1,15 @@
 <script setup lang="ts">
-const route = useRoute()
-const router = useRouter()
-const id = route.params.id as string
+import type { Player } from "~~/types/player";
 
-const { data: player, pending } = await useFetch(`/api/players/${id}`)
+const route = useRoute();
+const router = useRouter();
+const id = route.params.id as string;
 
-const form = ref({
-  name: '',
-  position: '',
+const { data: player, pending, error } = useFetch<Player>(`/api/players/${id}`);
+
+const form = ref<Omit<Player, "id" | "description">>({
+  name: "",
+  position: "",
   games: 0,
   atBats: 0,
   runs: 0,
@@ -23,33 +25,39 @@ const form = ref({
   avg: 0,
   obp: 0,
   slg: 0,
-  ops: 0
-})
+  ops: 0,
+});
 
-watch(player, (newPlayer) => {
-  if (newPlayer) {
-    form.value = { ...newPlayer }
-  }
-}, { immediate: true })
+watch(
+  player,
+  (newPlayer) => {
+    if (newPlayer) {
+      const { id, description, ...editableFields } = newPlayer;
+      form.value = editableFields;
+    }
+  },
+  { immediate: true },
+);
 
-const saving = ref(false)
-const saveError = ref<string | null>(null)
+const saving = ref(false);
+const saveError = ref<string | null>(null);
 
 async function save() {
-  saving.value = true
-  saveError.value = null
+  saving.value = true;
+  saveError.value = null;
 
   try {
     await $fetch(`/api/players/${id}`, {
-      method: 'PATCH',
-      body: form.value
-    })
-    router.push(`/players/${id}`)
+      method: "PATCH",
+      body: form.value,
+    });
+    router.push(`/players/${id}`);
   } catch (err) {
-    const error = err as { data?: { message?: string }, message?: string }
-    saveError.value = error.data?.message || error.message || 'Failed to save changes'
+    const error = err as { data?: { message?: string }; message?: string };
+    saveError.value =
+      error.data?.message || error.message || "Failed to save changes";
   } finally {
-    saving.value = false
+    saving.value = false;
   }
 }
 </script>
@@ -65,7 +73,22 @@ async function save() {
       Back to Player
     </UButton>
 
-    <div v-if="player" class="space-y-6">
+    <div v-if="pending" class="flex justify-center py-12">
+      <UIcon name="i-heroicons-arrow-path" class="animate-spin text-2xl" />
+    </div>
+
+    <UAlert
+      v-else-if="error"
+      color="error"
+      title="Failed to load player"
+      :description="
+        error.message ||
+        error.statusMessage ||
+        'An error occurred while loading the player'
+      "
+    />
+
+    <div v-else-if="player" class="space-y-6">
       <h1 class="text-3xl font-bold">Edit {{ player.name }}</h1>
 
       <UAlert
@@ -79,93 +102,170 @@ async function save() {
       <UCard>
         <form @submit.prevent="save" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <UFormGroup label="Name">
+            <UFormField label="Name">
               <UInput v-model="form.name" required />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Position">
+            <UFormField label="Position">
               <UInput v-model="form.position" required />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Games">
-              <UInput v-model.number="form.games" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Games">
+              <UInput
+                v-model.number="form.games"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="At Bats">
-              <UInput v-model.number="form.atBats" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="At Bats">
+              <UInput
+                v-model.number="form.atBats"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Runs">
-              <UInput v-model.number="form.runs" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Runs">
+              <UInput
+                v-model.number="form.runs"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Hits">
-              <UInput v-model.number="form.hits" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Hits">
+              <UInput
+                v-model.number="form.hits"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Doubles">
-              <UInput v-model.number="form.doubles" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Doubles">
+              <UInput
+                v-model.number="form.doubles"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Triples">
-              <UInput v-model.number="form.triples" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Triples">
+              <UInput
+                v-model.number="form.triples"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Home Runs">
-              <UInput v-model.number="form.homeRuns" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Home Runs">
+              <UInput
+                v-model.number="form.homeRuns"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="RBI">
-              <UInput v-model.number="form.rbi" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="RBI">
+              <UInput
+                v-model.number="form.rbi"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Walks">
-              <UInput v-model.number="form.walks" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Walks">
+              <UInput
+                v-model.number="form.walks"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Strikeouts">
-              <UInput v-model.number="form.strikeouts" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Strikeouts">
+              <UInput
+                v-model.number="form.strikeouts"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Stolen Bases">
-              <UInput v-model.number="form.stolenBases" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Stolen Bases">
+              <UInput
+                v-model.number="form.stolenBases"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="Caught Stealing">
-              <UInput v-model.number="form.caughtStealing" type="number" min="0" required />
-            </UFormGroup>
+            <UFormField label="Caught Stealing">
+              <UInput
+                v-model.number="form.caughtStealing"
+                type="number"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="AVG">
-              <UInput v-model.number="form.avg" type="number" step="0.001" min="0" max="1" required />
-            </UFormGroup>
+            <UFormField label="AVG">
+              <UInput
+                v-model.number="form.avg"
+                type="number"
+                step="0.001"
+                min="0"
+                max="1"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="OBP">
-              <UInput v-model.number="form.obp" type="number" step="0.001" min="0" required />
-            </UFormGroup>
+            <UFormField label="OBP">
+              <UInput
+                v-model.number="form.obp"
+                type="number"
+                step="0.001"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="SLG">
-              <UInput v-model.number="form.slg" type="number" step="0.001" min="0" required />
-            </UFormGroup>
+            <UFormField label="SLG">
+              <UInput
+                v-model.number="form.slg"
+                type="number"
+                step="0.001"
+                min="0"
+                required
+              />
+            </UFormField>
 
-            <UFormGroup label="OPS">
-              <UInput v-model.number="form.ops" type="number" step="0.001" min="0" required />
-            </UFormGroup>
+            <UFormField label="OPS">
+              <UInput
+                v-model.number="form.ops"
+                type="number"
+                step="0.001"
+                min="0"
+                required
+              />
+            </UFormField>
           </div>
 
           <div class="flex gap-2">
-            <UButton type="submit" :loading="saving">
-              Save Changes
-            </UButton>
-            <UButton variant="ghost" :to="`/players/${id}`">
-              Cancel
-            </UButton>
+            <UButton type="submit" :loading="saving"> Save Changes </UButton>
+            <UButton variant="ghost" :to="`/players/${id}`"> Cancel </UButton>
           </div>
         </form>
       </UCard>
-    </div>
-
-    <div v-else-if="pending" class="flex justify-center py-12">
-      <UIcon name="i-heroicons-arrow-path" class="animate-spin text-2xl" />
     </div>
   </UContainer>
 </template>

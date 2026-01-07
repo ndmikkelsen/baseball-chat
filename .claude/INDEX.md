@@ -2,7 +2,7 @@
 
 > Your comprehensive guide to building Baseball Chat together ⚾
 
-**Last Updated**: 2026-01-05
+**Last Updated**: 2026-01-06
 
 ## 🎯 Start Here
 
@@ -16,10 +16,10 @@
 
 ## 📊 Garden Statistics
 
-- **Total Files**: 19+ markdown files
-- **Active**: 19+ files
+- **Total Files**: 21+ markdown files
+- **Active**: 21+ files
 - **Categories**: 6 (commands, templates, architecture, patterns, quick-references, troubleshooting)
-- **Last Cultivation**: 2026-01-05
+- **Last Cultivation**: 2026-01-06
 
 ## 📁 Knowledge Base Structure
 
@@ -74,6 +74,11 @@ System design and technology decisions.
 
 Reusable solutions to common problems.
 
+- **[Nuxt Shared Types](patterns/nuxt-shared-types.md)**
+  - Centralized types directory for type-safe server/client communication
+  - Organizing types by concern (domain, schemas, API)
+  - Import patterns and path alias usage
+  - Real examples from baseball-chat project
 - **[Type Sharing in Nuxt](patterns/type-sharing-nuxt.md)**
   - How to share TypeScript types between server and client
   - Single source of truth for types
@@ -83,6 +88,11 @@ Reusable solutions to common problems.
 
 Fast lookups and how-to guides.
 
+- **[Nuxt Path Aliases](quick-references/nuxt-path-aliases.md)**
+  - Understanding `~` vs `~~` vs `@` vs `@@`
+  - When to use each alias
+  - Common errors and solutions
+  - Decision tree and cheat sheet
 - **[Nuxt Dynamic Routes](quick-references/nuxt-dynamic-routes.md)**
   - How `[id]` syntax works in file-based routing
   - Navigation patterns and examples

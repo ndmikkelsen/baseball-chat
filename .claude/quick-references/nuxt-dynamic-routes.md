@@ -344,6 +344,82 @@ if (error.value?.statusCode === 404) {
 
 ---
 
+## Routing Priority and Conflicts
+
+### ⚠️ Common Mistake: Nested Route Not Loading
+
+**Problem:** You have both `[id].vue` and `[id]/edit.vue`, but navigating to `/players/123/edit` shows a blank page with no errors.
+
+**Why It Fails:**
+
+```
+❌ WRONG - Causes routing conflict:
+app/pages/players/
+├── [id].vue          ← Catches ALL /players/:id/* routes
+└── [id]/
+    └── edit.vue      ← Never reached!
+
+✅ CORRECT - Proper nested routing:
+app/pages/players/
+└── [id]/
+    ├── index.vue     ← Handles /players/:id
+    └── edit.vue      ← Handles /players/:id/edit
+```
+
+**Explanation:**
+
+Nuxt's routing priority means `[id].vue` matches **any path** starting with `/players/:id`, including `/players/:id/edit`. The nested `[id]/edit.vue` route is never reached because the parent route catches it first.
+
+**Symptoms:**
+
+- ✅ Detail page works: `/players/123` loads correctly
+- ❌ Edit page fails: `/players/123/edit` shows blank page
+- ❌ No API requests in Network tab
+- ❌ No errors in browser console
+- ❌ No errors in dev server terminal
+- ✅ URL bar shows correct path
+
+**Solution:**
+
+Move `pages/players/[id].vue` → `pages/players/[id]/index.vue`
+
+```bash
+# Fix the routing conflict
+mkdir -p app/pages/players/[id]
+mv app/pages/players/[id].vue app/pages/players/[id]/index.vue
+
+# Clear Nuxt cache and restart
+rm -rf .nuxt
+pnpm dev
+```
+
+**After the fix:**
+
+- ✅ `/players/123` → Loads `[id]/index.vue`
+- ✅ `/players/123/edit` → Loads `[id]/edit.vue`
+- ✅ Both routes work independently
+
+**Prevention:**
+
+Always use the nested folder structure when you have child routes:
+
+```
+✅ Use this pattern:
+pages/
+└── [id]/
+    ├── index.vue    ← Parent route
+    ├── edit.vue     ← Child route
+    └── stats.vue    ← Child route
+
+❌ Don't use this:
+pages/
+├── [id].vue         ← Will conflict with children
+└── [id]/
+    └── edit.vue     ← Won't work
+```
+
+---
+
 ## Debugging Tips
 
 ### 1. Log Route Params

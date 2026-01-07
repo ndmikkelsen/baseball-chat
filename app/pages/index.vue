@@ -1,6 +1,23 @@
 <script setup lang="ts">
 import type { Player, SortKey, SortDirection } from "~~/types/player";
 
+type ColumnType = "string" | "number";
+
+const columns: Array<{
+  key: SortKey;
+  label: string;
+  shortLabel: string;
+  type: ColumnType;
+}> = [
+  { key: "name", label: "Player", shortLabel: "Player", type: "string" },
+  { key: "position", label: "Position", shortLabel: "Pos", type: "string" },
+  { key: "games", label: "Games", shortLabel: "G", type: "number" },
+  { key: "hits", label: "Hits", shortLabel: "H", type: "number" },
+  { key: "homeRuns", label: "Home Runs", shortLabel: "HR", type: "number" },
+  { key: "avg", label: "AVG", shortLabel: "AVG", type: "number" },
+  { key: "ops", label: "OPS", shortLabel: "OPS", type: "number" },
+];
+
 const sortKey = ref<SortKey>("hits");
 const sortDirection = ref<SortDirection>("desc");
 const {
@@ -9,28 +26,49 @@ const {
   error,
 } = await useFetch<Player[]>("/api/players");
 
+function compareValues(aVal: unknown, bVal: unknown, type: ColumnType): number {
+  if (type === "string") {
+    const aStr = String(aVal ?? "").toLowerCase();
+    const bStr = String(bVal ?? "").toLowerCase();
+    return aStr.localeCompare(bStr);
+  }
+  const aNum = typeof aVal === "number" ? aVal : 0;
+  const bNum = typeof bVal === "number" ? bVal : 0;
+  return aNum - bNum;
+}
+
 const sorted = computed(() => {
   const list = players.value ?? [];
+  const col = columns.find(c => c.key === sortKey.value);
+  const type = col?.type ?? "number";
+
+  const dir = sortDirection.value === "asc" ? 1 : -1;
+
   return [...list].sort((a, b) => {
-    const aVal = a[sortKey.value] ?? 0;
-    const bVal = b[sortKey.value] ?? 0;
-    return sortDirection.value === "desc" ? bVal - aVal : aVal - bVal;
+    const cmp = compareValues(a[sortKey.value], b[sortKey.value], type);
+    return dir * cmp;
   });
 });
 
-const sortOptions = computed(() => [
-  {
-    label: `Hits (${sortDirection.value === "desc" ? "High to Low" : "Low to High"})`,
-    value: "hits",
-  },
-  {
-    label: `Home Runs (${sortDirection.value === "desc" ? "High to Low" : "Low to High"})`,
-    value: "homeRuns",
-  },
-]);
+const sortOptions = computed(() =>
+  columns.map(c => ({
+    label: `${c.label} (${sortDirection.value === "desc" ? "High to Low" : "Low to High"})`,
+    value: c.key,
+  }))
+);
 
 function toggleSortDirection() {
   sortDirection.value = sortDirection.value === "desc" ? "asc" : "desc";
+}
+
+function handleSort(key: SortKey) {
+  if (sortKey.value === key) {
+    sortDirection.value = sortDirection.value === "desc" ? "asc" : "desc";
+  } else {
+    sortKey.value = key;
+    const col = columns.find(c => c.key === key);
+    sortDirection.value = col?.type === "string" ? "asc" : "desc";
+  }
 }
 </script>
 
@@ -75,39 +113,18 @@ function toggleSortDirection() {
           <thead class="bg-gray-50 dark:bg-gray-800">
             <tr>
               <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                v-for="col in columns"
+                :key="col.key"
+                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors select-none"
+                @click="handleSort(col.key)"
               >
-                Player
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                Pos
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                G
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                H
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                HR
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                AVG
-              </th>
-              <th
-                class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-              >
-                OPS
+                <div class="flex items-center gap-1">
+                  <span>{{ col.shortLabel }}</span>
+                  <SortIndicator 
+                    :active="sortKey === col.key" 
+                    :direction="sortDirection" 
+                  />
+                </div>
               </th>
             </tr>
           </thead>
@@ -148,12 +165,12 @@ function toggleSortDirection() {
               <td
                 class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ player.avg.toFixed(3) }}
+                {{ player.avg?.toFixed(3) ?? 'N/A' }}
               </td>
               <td
                 class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"
               >
-                {{ player.ops.toFixed(3) }}
+                {{ player.ops?.toFixed(3) ?? 'N/A' }}
               </td>
             </tr>
           </tbody>

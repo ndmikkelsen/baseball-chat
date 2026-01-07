@@ -16,9 +16,9 @@
 
 ## 📊 Garden Statistics
 
-- **Total Files**: 21+ markdown files
-- **Active**: 21+ files
-- **Categories**: 6 (commands, templates, architecture, patterns, quick-references, troubleshooting)
+- **Total Files**: 25+ markdown files
+- **Active**: 25+ files
+- **Categories**: 7 (commands, templates, architecture, patterns, quick-references, troubleshooting, standards)
 - **Last Cultivation**: 2026-01-07
 
 ## 📁 Knowledge Base Structure
@@ -83,11 +83,23 @@ Reusable solutions to common problems.
   - How to share TypeScript types between server and client
   - Single source of truth for types
   - Common patterns and anti-patterns
+- **[Sortable Table Columns](patterns/sortable-table-columns.md)**
+  - Implementing sortable data tables with clickable headers
+  - Type-safe sorting for mixed data types (strings and numbers)
+  - Visual indicators with arrow icons
+  - Smart defaults based on column type
+  - Dual UI: clickable headers + dropdown menu
 
 ### Quick References (`quick-references/`)
 
 Fast lookups and how-to guides.
 
+- **[Vue Null-Safe Rendering](quick-references/vue-null-safe-rendering.md)**
+  - Patterns for safely rendering optional values in templates
+  - Optional chaining (`?.`) and nullish coalescing (`??`)
+  - Common patterns by data type (numbers, strings, arrays)
+  - Real examples from baseball-chat player table
+  - When to use `??` vs `||`
 - **[Nuxt Path Aliases](quick-references/nuxt-path-aliases.md)**
   - Understanding `~` vs `~~` vs `@` vs `@@`
   - When to use each alias
@@ -102,6 +114,12 @@ Fast lookups and how-to guides.
 
 Common issues and solutions.
 
+- **[Vue Template Runtime Errors](troubleshooting/vue-template-runtime-errors.md)**
+  - Common runtime errors in Vue templates
+  - Cannot read property 'X' of null/undefined
+  - X is not a function errors
+  - Debugging strategies and prevention
+  - Real examples from baseball-chat
 - **[Prisma Client Not Found](troubleshooting/prisma-client-not-found.md)**
   - Misleading "Named export 'PrismaClient' not found" error
   - Real cause: Client not generated, not import syntax
@@ -110,6 +128,17 @@ Common issues and solutions.
   - When to replace complex UI libraries with simple HTML
   - TanStack Table error resolution
   - Decision framework for library vs custom code
+
+### Standards (`standards/`)
+
+Coding standards and best practices.
+
+- **[Commit Discipline](standards/commit-discipline.md)**
+  - One logical change per commit
+  - How to identify unrelated changes
+  - When to include documentation in commits
+  - Real examples from baseball-chat
+  - Benefits of focused commits
 
 ## 🌱 Future Growth Areas
 
@@ -126,10 +155,9 @@ As we continue building, we may add:
 - Error handling patterns
 - LLM caching strategies
 
-### Standards (`standards/`)
+### Standards
 - Coding standards (Nuxt/Vue/TypeScript)
 - Testing standards
-- Git workflow
 - Environment & secrets management
 
 ### Quick References

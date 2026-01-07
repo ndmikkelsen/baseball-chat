@@ -102,123 +102,123 @@ async function save() {
       <UCard>
         <form @submit.prevent="save" class="space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <UFormGroup label="Name">
+            <UFormField label="Name">
               <UInput v-model="form.name" required />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Position">
+            <UFormField label="Position">
               <UInput v-model="form.position" required />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Games">
+            <UFormField label="Games">
               <UInput
                 v-model.number="form.games"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="At Bats">
+            <UFormField label="At Bats">
               <UInput
                 v-model.number="form.atBats"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Runs">
+            <UFormField label="Runs">
               <UInput
                 v-model.number="form.runs"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Hits">
+            <UFormField label="Hits">
               <UInput
                 v-model.number="form.hits"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Doubles">
+            <UFormField label="Doubles">
               <UInput
                 v-model.number="form.doubles"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Triples">
+            <UFormField label="Triples">
               <UInput
                 v-model.number="form.triples"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Home Runs">
+            <UFormField label="Home Runs">
               <UInput
                 v-model.number="form.homeRuns"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="RBI">
+            <UFormField label="RBI">
               <UInput
                 v-model.number="form.rbi"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Walks">
+            <UFormField label="Walks">
               <UInput
                 v-model.number="form.walks"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Strikeouts">
+            <UFormField label="Strikeouts">
               <UInput
                 v-model.number="form.strikeouts"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Stolen Bases">
+            <UFormField label="Stolen Bases">
               <UInput
                 v-model.number="form.stolenBases"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="Caught Stealing">
+            <UFormField label="Caught Stealing">
               <UInput
                 v-model.number="form.caughtStealing"
                 type="number"
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="AVG">
+            <UFormField label="AVG">
               <UInput
                 v-model.number="form.avg"
                 type="number"
@@ -227,9 +227,9 @@ async function save() {
                 max="1"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="OBP">
+            <UFormField label="OBP">
               <UInput
                 v-model.number="form.obp"
                 type="number"
@@ -237,9 +237,9 @@ async function save() {
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="SLG">
+            <UFormField label="SLG">
               <UInput
                 v-model.number="form.slg"
                 type="number"
@@ -247,9 +247,9 @@ async function save() {
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
 
-            <UFormGroup label="OPS">
+            <UFormField label="OPS">
               <UInput
                 v-model.number="form.ops"
                 type="number"
@@ -257,7 +257,7 @@ async function save() {
                 min="0"
                 required
               />
-            </UFormGroup>
+            </UFormField>
           </div>
 
           <div class="flex gap-2">

@@ -5,3 +5,8 @@ ignoredBuiltDependencies:
   - maplibre-gl
   - unrs-resolver
   - vue-demi
+
+onlyBuiltDependencies:
+  - '@prisma/client'
+  - '@prisma/engines'
+  - prisma

@@ -21,5 +21,5 @@ export type Player = {
   description?: string | null
 }
 
-export type SortKey = "name" | "position" | "games" | "hits" | "homeRuns" | "avg" | "ops"
+export type SortKey = "name" | "position" | "games" | "hits" | "hitsPerGame" | "homeRuns" | "avg" | "ops"
 export type SortDirection = "asc" | "desc"

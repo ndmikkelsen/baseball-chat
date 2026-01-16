@@ -13,6 +13,7 @@ const columns: Array<{
   { key: "position", label: "Position", shortLabel: "Pos", type: "string" },
   { key: "games", label: "Games", shortLabel: "G", type: "number" },
   { key: "hits", label: "Hits", shortLabel: "H", type: "number" },
+  { key: "hitsPerGame", label: "Hits / Game", shortLabel: "H/G", type: "number" },
   { key: "homeRuns", label: "Home Runs", shortLabel: "HR", type: "number" },
   { key: "avg", label: "AVG", shortLabel: "AVG", type: "number" },
   { key: "ops", label: "OPS", shortLabel: "OPS", type: "number" },
@@ -45,7 +46,17 @@ const sorted = computed(() => {
   const dir = sortDirection.value === "asc" ? 1 : -1;
 
   return [...list].sort((a, b) => {
-    const cmp = compareValues(a[sortKey.value], b[sortKey.value], type);
+    let aVal, bVal;
+    
+    if (sortKey.value === "hitsPerGame") {
+      aVal = a.games ? a.hits / a.games : Number.NEGATIVE_INFINITY;
+      bVal = b.games ? b.hits / b.games : Number.NEGATIVE_INFINITY;
+    } else {
+      aVal = a[sortKey.value];
+      bVal = b[sortKey.value];
+    }
+    
+    const cmp = compareValues(aVal, bVal, type);
     return dir * cmp;
   });
 });
@@ -156,6 +167,11 @@ function handleSort(key: SortKey) {
                 class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"
               >
                 {{ player.hits }}
+              </td>
+              <td
+                class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"
+              >
+                {{ player.games ? (player.hits / player.games).toFixed(2) : '-' }}
               </td>
               <td
                 class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"
